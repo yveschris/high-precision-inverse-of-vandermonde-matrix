@@ -7,9 +7,12 @@ function B = invvander(v, m)
 %  powers of the vector v: A(i,j) = v(i)^(j-1), i = {1, 2, ..., m},
 %  j = {1, 2, ..., n}, where n is the length of v. If m is not specified,
 %  square matrix is assumed, i.e. m = n.
-%
+%  computation complexity: O(2(n-1)^2)
 % Yu Chen, <chrainy@gmail.com>
-% Version: 1.0, Date: 2023-04-20
+% Version: 1.0, Date: 2023-05-25
+% v = 1:.5:4;
+% m = numel(v);
+
 assert(isrow(v), 'v must be a row vector.')
 assert(numel(v) == numel(unique(v)), 'all elements in the v must be distinct.')
 n = numel(v);
@@ -19,6 +22,7 @@ else
     assert(isscalar(m), 'm must be a scalar.')
     assert(m > 0 && mod(m, 1) == 0, 'm must be a poistive integer.')
 end
+
 if m == n
     % 1-by-1 matrix
     if n == 1
@@ -26,23 +30,29 @@ if m == n
         return;
     end
     
-    P = zeros(n, n - 1);
-    P(1:2, 1) = [-v(n); 1];
-    for i = 2:n-1
-        P(1:(i + 1), i) = [0; P(1:i, i - 1)] + [-v(n - i + 1) * P(1:i, i - 1); 0];
+    p = [-v(1) 1];
+    C(1) = 1;
+    for i = 2:n
+        p = [0, p] + [-v(i) * p, 0];
+        
+        Cp = C;
+        C = zeros(1, i);
+        for j = 1:i - 1
+            C(j) = Cp(j) / (v(j) - v(i));       
+        end
+        C(i) = - sum(C);
     end
     
     B = zeros(n);
-    ii = 1:n;
-    B(1, :) = P(:, n-1) / prod(v(1) - v(ii ~= 1));
-    cc = [-v(1); 1];
+    c = zeros(1, n);
     
-    for i = 2:n-1
-        c = conv(cc, P(1:(n-i+1), n-i));
-        B(i, :) = c / prod(v(i) - v(ii ~= i));
-        cc = [0; cc] + [-v(i) * cc; 0];
+    for i = 1:n
+        c(n) = 1;
+        for j = n-1:-1:1
+            c(j) = p(j + 1) + v(i) * c(j + 1);
+        end
+        B(i, :) = c * C(i);
     end
-    B(n, :) = cc / prod(v(n) - v(ii ~= n));
     
 else
     V = (v.' .^ (0:(m - 1)));

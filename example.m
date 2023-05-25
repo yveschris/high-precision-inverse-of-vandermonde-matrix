@@ -1,18 +1,29 @@
-rng(42)
-v = 1:.5:7;
+v = 1:.5:6;
 A = vanderm(v);
-B = invvander(v);
-x = randn(numel(v),1);
-b = A * x;
-y1 = inv(A) * b;
-y2 = A \ b;
-y3 = B * b;
-err1 = norm(y1 - x);  % absolute error of using inv, err1 = 0.0668
-err2 = norm(y2 - x);  % absolute error of using mldivide, err2 = 0.0233
-err3 = norm(y3 - x);  % % absolute error of using invvander, err3 = 6.5713e-06
-semilogy(1, err1, 'p', 'MarkerSize', 15, 'MarkerFaceColor', 'r');
-hold on
-semilogy(2, err2, 'p', 'MarkerSize', 15, 'MarkerFaceColor', 'g');
-semilogy(3, err3, 'p', 'MarkerSize', 15, 'MarkerFaceColor', 'b');
-legend('inv', 'mldivide', 'invvander');
+
+%% computational accuracy
+e1 = norm(A - inv(inv(A)), 2);
+e2 = norm(A - inv(invvander(v)), 2);
+
+figure(1)
+semilogy(1, e1, 'p', 2, e2, 'p', 'MarkerSize', 30);
+legend('build-in inv', 'invvander', 'FontSize', 15);
+ylabel('error')
+xlim([0.9, 2.1])
 grid on
+disp(['e1/e2 = ' num2str(e1 / e2)]);
+
+%% computational time
+g = @() invvander(v);
+h = @() inv(A);
+t1 = timeit(g);
+t2 = timeit(h);
+
+figure(2)
+plot(1, t1, 'p', 2, t2, 'p', 'MarkerSize', 30);
+legend('build-in inv', 'invvander', 'FontSize', 15);
+ylabel('run time')
+xlim([0.9, 2.1])
+grid on
+
+disp(['t1/t2 = ' num2str(t1 / t2)]);
