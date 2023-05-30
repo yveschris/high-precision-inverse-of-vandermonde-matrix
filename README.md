@@ -45,6 +45,7 @@ A = vanderm(v);
 e1 = norm(A - inv(inv(A)), 2);
 e2 = norm(A - inv(invvander(v)), 2);
 disp(['e1/e2 = ' num2str(e1 / e2)]);
+% Octave Output: e1/e2 = 150.8606
 
 tic
 invvander(v);
@@ -53,7 +54,11 @@ tic
 inv(A);
 t2 = toc
 disp(['t1/t2 = ' num2str(t1 / t2)]);
+% Octave Output: t1/t2 = 40.9325
 ```
+
+
+
 
 ## References
 
