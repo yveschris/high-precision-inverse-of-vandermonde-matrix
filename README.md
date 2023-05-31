@@ -11,6 +11,8 @@ Its syntax is similar to the Octave/MATLAB built-in function `vander`.
 
 Given that $\{x_1,x_2,...x_{11}\}$ `=1:0.5:6`, running **Example 3** below shows that `invvander` is 150.86 times more accurate and 40.93 times faster than `inv`.
 
+![errors_comparison](errors_comparison.png)
+
 
 ## Algorithms
 The algorithm calculates the analytic-form inverse of a square Vandermonde matrix. It is implemented
@@ -18,7 +20,8 @@ based on a draft as well as C codes I developed: https://github.com/yveschris/po
 
 The algorithm of the calculating the pseudoinverse of a rectangular Vandermonde matrix is standard. It  implemented based on the QR decomposition, followed by a forward and a back substitutions. 
 
-## Syntax and Function Discription
+## Syntax and Function Description
+
 B = invvander(v) returns the inverse of a square Vandermonde Matrix, i.e., m = n for the above matrix V. v has to be a row vector and v = [x1, x2, ..., xn].
 
 B = invvander(v, m) returns the pseudoinverse of an m-by-n rectangular Vandermonde Matrix. v has to be a row vector and v = [x1, x2, ..., xn] while m has to be a scalar and positive integer of the above matrix V. If m equals the number of v, then B is the inversed square Vandermonder matrix. 
