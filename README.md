@@ -12,10 +12,6 @@ Its syntax is similar to the Octave/MATLAB built-in function `vander`.
 Given that $\{x_1,x_2,...x_{11}\}$ `=1:0.5:6`, running **Example 3** below shows that `invvander` is 150.86 times more accurate and 40.93 times faster than `inv`.
 
 ![errors_comparison](errors_comparison.png)
-<<<<<<< HEAD
-
-=======
->>>>>>> cb23ed4a766d42f6c65bf756343f909b664a6115
 
 ## Algorithms
 The algorithm calculates the analytic-form inverse of a square Vandermonde matrix. It is implemented
