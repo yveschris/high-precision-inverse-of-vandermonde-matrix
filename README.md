@@ -7,7 +7,7 @@ Its syntax is similar to the Octave/MATLAB built-in function `vander`.
 
 `invvander` computes the analytic-form inverse of any square Vandermonde matrix in 5.5n^2 floating point operations (flops). `invvander` introduces significantly less rounding errors because it avoids numerical matrix inversion (Vandemonde matrices are usually ill-conditioned). Moreover, `invvander` might be the fastest algorithm so far because is faster than Parker's algorithm that requires 6n^2 flops [1].
 
-Given that {x_1,x_2,...x_{11}} `=1:0.5:6`, running **Example 3** below shows that `invvander` is 150.86 times more accurate and 40.93 times faster than `inv`.
+Given that [x2,x2,...x10] `=1:0.5:6`, running **Example 3** below shows that `invvander` is 150.86 times more accurate and 40.93 times faster than `inv`.
 
 ## Algorithms
 The algorithm calculates the analytic-form inverse of a square Vandermonde matrix. It is implemented
