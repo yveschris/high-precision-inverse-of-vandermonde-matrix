@@ -2,16 +2,12 @@
 
 ##  Introduction
 `invvander` inverses an m-by-n Vandermonde matrix:
-```math
-V=\left[\begin{array}{ccccc}1 & 1 & 1 & \cdots & 1 \\ x_1 & x_2 & x_3 & \cdots & x_n \\ x_1^2 & x_2^2 & x_3^2 & \cdots & x_n^2 \\ \vdots & \vdots & \ddots & \vdots & \\ x_1^m & x_2^m & x_3^m & \cdots & x_n^m\end{array}\right]
-```
+![vanderm](vanderm.png)
 Its syntax is similar to the Octave/MATLAB built-in function `vander`.
 
 `invvander` computes the analytic-form inverse of any square Vandermonde matrix in 5.5n^2 floating point operations (flops). `invvander` introduces significantly less rounding errors because it avoids numerical matrix inversion (Vandemonde matrices are usually ill-conditioned). Moreover, `invvander` might be the fastest algorithm so far because is faster than Parker's algorithm that requires 6n^2 flops [1].
 
 Given that {x_1,x_2,...x_{11}} `=1:0.5:6`, running **Example 3** below shows that `invvander` is 150.86 times more accurate and 40.93 times faster than `inv`.
-
-![errors_comparison](errors_comparison.png)
 
 ## Algorithms
 The algorithm calculates the analytic-form inverse of a square Vandermonde matrix. It is implemented
@@ -35,8 +31,8 @@ B = invvander(v);
 
 ### Example 2: pseudoinverse of an m-by-n rectangular Vandermonde matrix:
 ```matlab
-v = 1:.5:4;
-B = invvander(v, 10);
+v = 1:.5:6;
+B = invvander(v, 20);
 ```
 
 ###  Example 3: Error reduction and runtime improvement testing when dealing with a square Vandermonde matrix:
